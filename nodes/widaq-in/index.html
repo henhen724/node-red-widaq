@@ -1,0 +1,88 @@
+<script type="text/javascript">
+    RED.nodes.registerType('widaq-in', {
+        category: 'network',
+        color: '#ef9a9a',
+        defaults: {
+            server: { value: "", type: "widaq-broker", required: true },
+            topic: { value: "", required: true },
+            qos: { values: 0 },
+            name: { value: "" }
+        },
+        icon: "icons/icon.svg",
+        inputs: 0,
+        outputs: 1,
+        label: function () {
+            return this.name || this.topic || "widaq-in";
+        },
+        oneditprepare: function () {
+            const defaultSchema = "# A example input type\ninput MqttPacket {\n\t# Turn a light on or off\n\ton: Boolean\n}";
+            this.editor = RED.editor.createEditor({
+                id: 'node-input-schema-editor',
+                mode: 'ace/mode/graphqlschema',
+                value: this.schema ? this.schema : defaultSchema
+            });
+            const tabs = RED.tabs.create({
+                id: "node-config-widaq-in-tabs",
+                onchange: function (tab) {
+                    $("#node-config-widaq-in-tabs-content").children().hide();
+                    $("#" + tab.id).show();
+                }
+            });
+            tabs.addTab({
+                id: "widaq-in-tab-connection",
+                label: "Connection"
+            });
+            tabs.addTab({
+                id: "widaq-in-tab-schema",
+                label: "Schema"
+            });
+        },
+        oneditsave: function () {
+            this.schema = this.editor.getValue();
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditcancel: function () {
+            this.editor.destroy();
+            delete this.editor;
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="widaq-in">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <ul style="min-width: 600px; margin-bottom: 20px;" id="node-config-widaq-in-tabs"></ul>
+    </div>
+    <div id="node-config-widaq-in-tabs-content" style="min-height:150px;">
+        <div id="widaq-in-tab-connection" style="display:none">
+            <div class="form-row">
+                <label for="node-input-server"><i class="fa fa-globe"></i> Server</label>
+                <input type="text" id="node-input-server">
+            </div>
+            <div class="form-row">
+                <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+                <input type="text" id="node-input-topic" placeholder="Topic">
+            </div>
+            <div class="form-row">
+                <label for="node-input-qos"><i class="fa fa-empire"></i> QoS</label>
+                <select type="text" id="node-input-qos" style="width:125px !important">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+        </div>
+        <div id="widaq-in-tab-schema" style="display:none">
+            <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-schema-editor">
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="widaq-in">
+    <p>A simple node that converts the message payloads into all widaq-in characters</p>
+</script>
