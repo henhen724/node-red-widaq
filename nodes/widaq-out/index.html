@@ -6,8 +6,10 @@
             server: { value: "", type: "widaq-broker", required: true },
             topic: { value: "", required: true },
             qos: { values: 0 },
-            retain: { values: false },
-            name: { value: "" }
+            retain: { values: "false" },
+            name: { value: "" },
+            useType: { value: "false" },
+            verify: { value: "false" }
         },
         icon: "icons/icon.svg",
         inputs: 1,
@@ -16,11 +18,10 @@
             return this.name || this.topic || "widaq-out";
         },
         oneditprepare: function () {
-            const defaultSchema = "# A example input type\ninput MqttPacket {\n\t# Turn a light on or off\n\ton: Boolean\n}";
             this.editor = RED.editor.createEditor({
-                id: 'node-input-schema-editor',
+                id: 'node-input-type-editor',
                 mode: 'ace/mode/graphqlschema',
-                value: this.schema ? this.schema : defaultSchema
+                value: this.typeDef ? this.typeDef : `\n# A example input type\ntype ${this.topic ? this.topic : '"<TOPIC_NAME/>"'} {\n\t# Turn a light on or off\n\ton: Boolean\n}`
             });
             const tabs = RED.tabs.create({
                 id: "node-config-widaq-out-tabs",
@@ -34,12 +35,12 @@
                 label: "Connection"
             });
             tabs.addTab({
-                id: "widaq-out-tab-schema",
-                label: "Schema"
+                id: "widaq-out-tab-type",
+                label: "Type Definition"
             });
         },
         oneditsave: function () {
-            this.schema = this.editor.getValue();
+            this.typeDef = this.editor.getValue();
             this.editor.destroy();
             delete this.editor;
         },
@@ -82,13 +83,48 @@
                 </select>
             </div>
         </div>
-        <div id="widaq-out-tab-schema" style="display:none">
-            <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-schema-editor">
+        <div id="widaq-out-tab-type" style="display:none">
+            <div class="form-row">
+                <label for="node-input-useType"><i class="fa fa-code"></i> Use Type</label>
+                <select type="text" id="node-input-useType" style="width:125px !important">
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+                <label for="node-input-verify"><i class="fa fa-filter"></i> Verify Input</label>
+                <select type="text" id="node-input-verify" style="width:125px !important">
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+            </div>
+            <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-type-editor">
             </div>
         </div>
     </div>
 </script>
 
 <script type="text/html" data-help-name="widaq-out">
-    <p>A simple node that converts the message payloads into all widaq-out characters</p>
+    <p>Connects to an MQTT Broker managed by a Wi DAQ server, publish messages to the specified topic, shares the user generated type for output, and validates input as matching.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object|TopicType</span>
+        </dt>
+        <dd> the message to send to the MQTT server. If it is an object it is stringified as JSON, if it is a string it is published as is. </dd>
+        <dt>topic
+            <span class="property-type">string</span>
+        </dt>
+        <dd> the topic that the MQTT packet will be published to. </dd>
+        <dt>qos
+            <span class="property-type">0|1|2</span>
+        </dt>
+        <dd> 0, fire and forget - 1, at least once - 2, once and once only. Default 0</dd>
+        <dt>retain
+            <span class="property-type">boolean</span>
+        </dt>
+        <dd> set to true to retain the message on the broker. Default false. </dd>
+    </dl>
+    <h3>Details</h3>
+    <p>The subscription topic can include MQTT wildcards, + for one level, # for multiple levels.</p>
+    <p>This node requires a connection to a Wi DAQ broker to be configured. This is configured by clicking the pencil icon.</p>
+    <p>Several Wi DAQ nodes (in or out) can share the same broker connection if required.</p>
 </script>

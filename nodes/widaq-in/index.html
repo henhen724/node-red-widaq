@@ -15,11 +15,11 @@
             return this.name || this.topic || "widaq-in";
         },
         oneditprepare: function () {
-            const defaultSchema = "# A example input type\ninput MqttPacket {\n\t# Turn a light on or off\n\ton: Boolean\n}";
+            const defaultType = "# A example input type\ninput MqttPacket {\n\t# Turn a light on or off\n\ton: Boolean\n}";
             this.editor = RED.editor.createEditor({
                 id: 'node-input-schema-editor',
                 mode: 'ace/mode/graphqlschema',
-                value: this.schema ? this.schema : defaultSchema
+                value: this.typeDef ? this.typeDef : defaultSchema
             });
             const tabs = RED.tabs.create({
                 id: "node-config-widaq-in-tabs",
@@ -77,6 +77,18 @@
             </div>
         </div>
         <div id="widaq-in-tab-schema" style="display:none">
+            <div class="form-row">
+                <label for="node-input-useSchema"><i class="fa fa-code"></i> Use Schema</label>
+                <select type="text" id="node-input-useSchema" style="width:125px !important">
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+                <label for="node-input-verify"><i class="fa fa-filter"></i> Verify Output</label>
+                <select type="text" id="node-input-verify" style="width:125px !important">
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+            </div>
             <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-schema-editor">
             </div>
         </div>
@@ -84,5 +96,28 @@
 </script>
 
 <script type="text/html" data-help-name="widaq-in">
-    <p>A simple node that converts the message payloads into all widaq-in characters</p>
+    <p>Connects to an MQTT Broker managed by a Wi DAQ server, subscribes to messages from the specified topic, shares the user generated schema for input, and validates output as matching.</p>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object|SchemaType</span>
+        </dt>
+        <dd> the message of the MQTT packet parse as JSON (and verified against the schema if verification is turned on). </dd>
+        <dt>topic
+            <span class="property-type">string</span>
+        </dt>
+        <dd> the topic that the MQTT packet was published to. </dd>
+        <dt>qos
+            <span class="property-type">0|1|2</span>
+        </dt>
+        <dd> 0, fire and forget - 1, at least once - 2, once and once only. </dd>
+        <dt>retain
+            <span class="property-type">boolean</span>
+        </dt>
+        <dd> true indicates the message was retained and may be old. </dd>
+    </dl>
+    <h3>Details</h3>
+    <p>The subscription topic can include MQTT wildcards, + for one level, # for multiple levels.</p>
+    <p>This node requires a connection to a Wi DAQ broker to be configured. This is configured by clicking the pencil icon.</p>
+    <p>Several Wi DAQ nodes (in or out) can share the same broker connection if required.</p>
 </script>

@@ -1,5 +1,5 @@
 # Wi DAQ Node-Red nodes (Alpha)
-The Rasberry Pi end of the Wi-DAQ control system.  Install this in the node-red userDir (~/.node-red by default) to use Wi-DAQ nodes which can make the Pi visible to your Wi-DAQ server and able send and recieve data and remote control.
+The Rasberry Pi end of the Wi-DAQ control system which make the Pi visible to your Wi-DAQ server and able to send and recieve data and remote control.
 ## Installation
 - Navigate to your node-red user folder in your terminal of choice.  By default the user folder is $HOME/.node-red. You can set it to something else by passing the --userDir argument when running node-red from the command line, [*according to this docs page*](https://nodered.org/docs/user-guide/runtime/configuration).
 - Once you're there run
@@ -18,7 +18,9 @@ The Rasberry Pi end of the Wi-DAQ control system.  Install this in the node-red 
     ```
     __Warning:__ Installation scripts like the one above are very dificult to test, and you may run into and error using the one above.  When you run into an error with it, please leave an issue on this GitHub repository.  To manually install, see the [Manually Installing GraphQL Highlighting and Linting](#manual) section below.
 
-## Useage
+## Usage
+
+__*Coming soon*__
 
 ## Manually Installing GraphQL Highlighting and Linting <a name="manual"></a>
 - Navigate to your node-red install.  If you installed it locally in folder, navigate to that. If you installed globally the path will be the following
