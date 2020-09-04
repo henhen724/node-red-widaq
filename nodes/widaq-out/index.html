@@ -19,9 +19,9 @@
         },
         oneditprepare: function () {
             this.editor = RED.editor.createEditor({
-                id: 'node-input-type-editor',
+                id: 'node-input-typeDef-editor',
                 mode: 'ace/mode/graphqlschema',
-                value: this.typeDef ? this.typeDef : `\n# A example input type\ntype ${this.topic ? this.topic : '"<TOPIC_NAME/>"'} {\n\t# Turn a light on or off\n\ton: Boolean\n}`
+                value: this.typeDef ? this.typeDef : `# Do not change the type name\ntype ${this.topic ? this.topic : '"<TOPIC_NAME/>"'} {\n\t# Change this to what ever properties you want\n\ton: Boolean\n}`
             });
             const tabs = RED.tabs.create({
                 id: "node-config-widaq-out-tabs",
@@ -35,7 +35,7 @@
                 label: "Connection"
             });
             tabs.addTab({
-                id: "widaq-out-tab-type",
+                id: "widaq-out-tab-typeDef",
                 label: "Type Definition"
             });
         },
@@ -83,7 +83,7 @@
                 </select>
             </div>
         </div>
-        <div id="widaq-out-tab-type" style="display:none">
+        <div id="widaq-out-tab-typeDef" style="display:none">
             <div class="form-row">
                 <label for="node-input-useType"><i class="fa fa-code"></i> Use Type</label>
                 <select type="text" id="node-input-useType" style="width:125px !important">
@@ -96,7 +96,7 @@
                     <option value="true">true</option>
                 </select>
             </div>
-            <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-type-editor">
+            <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-typeDef-editor">
             </div>
         </div>
     </div>

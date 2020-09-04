@@ -6,7 +6,9 @@
             server: { value: "", type: "widaq-broker", required: true },
             topic: { value: "", required: true },
             qos: { values: 0 },
-            name: { value: "" }
+            name: { value: "" },
+            useType: { value: "false" },
+            verify: { value: "false" }
         },
         icon: "icons/icon.svg",
         inputs: 0,
@@ -15,11 +17,10 @@
             return this.name || this.topic || "widaq-in";
         },
         oneditprepare: function () {
-            const defaultType = "# A example input type\ninput MqttPacket {\n\t# Turn a light on or off\n\ton: Boolean\n}";
             this.editor = RED.editor.createEditor({
-                id: 'node-input-schema-editor',
+                id: 'node-input-typeDef-editor',
                 mode: 'ace/mode/graphqlschema',
-                value: this.typeDef ? this.typeDef : defaultSchema
+                value: this.typeDef ? this.typeDef : `# Do not change the type name\ntype ${this.topic ? this.topic : '"<TOPIC_NAME/>"'} {\n\t# Change this to what ever properties you want\n\ton: Boolean\n}`
             });
             const tabs = RED.tabs.create({
                 id: "node-config-widaq-in-tabs",
@@ -33,12 +34,12 @@
                 label: "Connection"
             });
             tabs.addTab({
-                id: "widaq-in-tab-schema",
-                label: "Schema"
+                id: "widaq-in-tab-typeDef",
+                label: "Type Definition"
             });
         },
         oneditsave: function () {
-            this.schema = this.editor.getValue();
+            this.typeDef = this.editor.getValue();
             this.editor.destroy();
             delete this.editor;
         },
@@ -76,10 +77,10 @@
                 </select>
             </div>
         </div>
-        <div id="widaq-in-tab-schema" style="display:none">
+        <div id="widaq-in-tab-typeDef" style="display:none">
             <div class="form-row">
-                <label for="node-input-useSchema"><i class="fa fa-code"></i> Use Schema</label>
-                <select type="text" id="node-input-useSchema" style="width:125px !important">
+                <label for="node-input-useType"><i class="fa fa-code"></i> Use Type</label>
+                <select type="text" id="node-input-useType" style="width:125px !important">
                     <option value="false">false</option>
                     <option value="true">true</option>
                 </select>
@@ -89,7 +90,7 @@
                     <option value="true">true</option>
                 </select>
             </div>
-            <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-schema-editor">
+            <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-typeDef-editor">
             </div>
         </div>
     </div>
@@ -100,9 +101,9 @@
     <h3>Output</h3>
     <dl class="message-properties">
         <dt>payload
-            <span class="property-type">object|SchemaType</span>
+            <span class="property-type">object|TopicType</span>
         </dt>
-        <dd> the message of the MQTT packet parse as JSON (and verified against the schema if verification is turned on). </dd>
+        <dd> the message of the MQTT packet parse as JSON (and verified against the type definition if verification is turned on). </dd>
         <dt>topic
             <span class="property-type">string</span>
         </dt>
