@@ -12,9 +12,7 @@
   ],
   "node-red": {
     "nodes": {
-      "widaq-broker": "nodes/widaq-broker/index.js",
-      "widaq-in": "nodes/widaq-in/index.js",
-      "widaq-out": "nodes/widaq-out/index.js"
+      "widaq": "nodes/index.js"
     }
   },
   "dependencies": {
