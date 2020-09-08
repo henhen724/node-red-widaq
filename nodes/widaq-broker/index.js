@@ -1,9 +1,6 @@
-const getState = require("../../lib/getState");
-const pty = require("node-pty");
-
 const mqttListners = require("./mqttListners");
 const httpListners = require("./httpListners");
-const handleSchemas = require("./handleSchemas");
+const formatSchema = require("../../lib/formatSchema");
 module.exports = function (RED) {
     function WiDAQBroker(config) {
         // Get all cofig varibles into the state of the node
@@ -11,12 +8,13 @@ module.exports = function (RED) {
         this.host = config.host;
         this.port = config.port;
         this.topicsObj = {};
-        this.inTypes = {};
-        this.outTypes = {};
-        this.inTypes = {};
-        handleSchemas(this);
+        this.schema = { in: {}, out: {} };
         mqttListners(this);
         httpListners(RED, this);
+        new Promise(res => setTimeout(res, 0)).then(() => {
+            // After all other nodes have declared
+            formatSchema(this, this.schema);
+        })
     }
     RED.nodes.registerType("widaq-broker", WiDAQBroker, {
         credentials: {
