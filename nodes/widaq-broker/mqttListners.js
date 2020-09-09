@@ -9,7 +9,7 @@ const mqttListners = (node) => {
             if (err) {
                 node.error(err);
             }
-        })
+        });
     });
     node.client.on('error', (error) => {
         node.error(`There was an issue connecting to the Wi DAQ MQTT server: ${error}`);

@@ -1,6 +1,6 @@
 {
   "name": "node-red-widaq",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "description": "The Rasberry Pi end of the Wi-DAQ control system.  Install this in the node-red userDir (~/.node-red by default) to use Wi-DAQ nodes which can make the Pi visible to your Wi-DAQ server and able send and recieve data and remote control.",
   "main": "index.js",
   "author": "Henry Hunt",
@@ -8,10 +8,13 @@
   "license": "MIT",
   "private": false,
   "keywords": [
-    "node-red"
+    "node-red",
+    "widaq",
+    "Wi DAQ"
   ],
   "scripts": {
     "test": "jest",
+    "memleak": "jest --runInBand --detectOpenHandles",
     "install": "node config/install-mode-graphqlschema.js"
   },
   "node-red": {
@@ -20,13 +23,17 @@
     }
   },
   "dependencies": {
+    "@hapi/iron": "^6.0.0",
     "body-parser": "^1.19.0",
+    "cookies": "^0.8.0",
     "graphql": "^15.3.0",
     "mqtt": "^4.2.1",
     "node-pty": "^0.9.0",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "jest": "^26.4.2"
+    "express": "^4.17.1",
+    "jest": "^26.4.2",
+    "supertest": "^4.0.2"
   }
 }

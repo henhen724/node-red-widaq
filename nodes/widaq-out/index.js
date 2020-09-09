@@ -8,7 +8,7 @@ module.exports = function (RED) {
         this.retain = config.retain;
         this.shouldValidate = !!config.shouldValidate;
         this.useType = !!config.useType;
-        this.server.outTypes[this.topic] = this.useType ? this.typeDef : null;
+        this.server.schema.out[this.topic] = this.useType ? this.typeDef : null;
         if (this.server) {
             this.status({ fill: "green", shape: "dot", text: "connected" })
             const node = this;

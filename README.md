@@ -12,17 +12,19 @@ The Rasberry Pi end of the Wi-DAQ control system which make the Pi visible to yo
     yarn add node-red-widaq
     ```
     if you perfer yarn.
-- (Optional step) The widaq type system uses [the GraphQL Type language](https://graphql.org/learn/schema/#type-language) to help validate MQTT input and output as well as making it easier to use the website by providing topic and property descriptions.  By default node-red's text editor does not include highlighting or syntax linting for GraphQL. Unfortunately, node-red make adding this quite difficult and provides no way for npm package to install new highlighting. Skiping this step does not stop you from writting in the text editor, but if you would like highlighting and linting while editing run the command bellow from the userDir.
+<!-- - (Optional step) The widaq type system uses [the GraphQL Type language](https://graphql.org/learn/schema/#type-language) to help validate MQTT input and output as well as making it easier to use the website by providing topic and property descriptions.  By default node-red's text editor does not include highlighting or syntax linting for GraphQL. Unfortunately, node-red make adding this quite difficult and provides no way for npm package to install new highlighting. Skiping this step does not stop you from writting in the text editor, but if you would like highlighting and linting while editing run the command bellow from the userDir.
     ```
     node node_modules/node-red-widaq/config/install-mode-graphqlschema.js
     ```
-    __Warning:__ Installation scripts like the one above are very dificult to test, and you may run into and error using the one above.  When you run into an error with it, please leave an issue on this GitHub repository.  To manually install, see the [Manually Installing GraphQL Highlighting and Linting](#manual) section below.
+    __Warning:__ Installation scripts like the one above are very dificult to test, and you may run into and error using the one above.  When you run into an error with it, please leave an issue on this GitHub repository.  To manually install, see the [Manually Installing GraphQL Highlighting and Linting](#manual) section below. -->
 
 ## Usage
-
-__*Coming soon*__
-
-## Manually Installing GraphQL Highlighting and Linting <a name="manual"></a>
+### Nodes
+The usage of widaq nodes is essentially identical to mqtt nodes.  There are in, out, and broker nodes which allow to connect to a MQTT broker connected to a Wi DAQ server.  In addition to the default functions of these node, you can add a schema, which allows the Wi DAQ website to show users what type of input/output you would like and how you would like it to be formated.
+### HTTP Routes
+If you go to the /widaq/ssh route of the device the broker node will server you a psuedo terminal in the browser. 
+__Warning:__ The psuedo terminal is complete unsecure as of this version and will allow any webuser the ability excute non-admin command line commands.
+<!-- ## Manually Installing GraphQL Highlighting and Linting <a name="manual"></a>
 - Navigate to your node-red install.  If you installed it locally in folder, navigate to that. If you installed globally the path will be the following
     ### Mac OS/Linux
     ```
@@ -51,4 +53,4 @@ __*Coming soon*__
     Invoke-WebRequest https://raw.githubusercontent.com/henhen724/node-red-widaq/master/config/mode-graphqlschema.js -OutFile mode-graphqlschema.js
     ```
     ### Windows CMD
-    Extraordinarily, CMD does not have a tool to make a HTTP get request.  Please either use powershell, or install wget and use the wget command above.
+    Extraordinarily, CMD does not have a tool to make a HTTP get request.  Please either use powershell, or install wget and use the wget command above. -->

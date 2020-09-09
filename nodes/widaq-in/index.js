@@ -7,7 +7,7 @@ module.exports = function (RED) {
         this.qos = config.qos ? config.qos : 0;
         this.shouldValidate = !!config.shouldValidate;
         this.useType = !!config.useType;
-        this.server.inTypes[this.topic] = this.useType ? this.typeDef : null;
+        this.server.schema.in[this.topic] = this.useType ? this.typeDef : null;
         if (this.server) {
             this.server.topicsObj[this.topic] = { qos: this.qos };
             const node = this;
