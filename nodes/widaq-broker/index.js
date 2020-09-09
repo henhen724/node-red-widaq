@@ -14,9 +14,10 @@ module.exports = function (RED) {
         mqttListners(this);
         httpListners(RED.httpNode);
         socketListners(RED.server, this);
+        const node = this
         new Promise(res => setTimeout(res, 0)).then(() => {
             // After all other nodes have declared
-            formatSchema(this.error, this.schema);
+            formatSchema(node.error, node.schema);
             node.client.publish("__widaq_state__", JSON.stringify(getState(this)));
             node.client.on("message", (topic, message) => {
                 if (topic === "__widaq_req_state__")
