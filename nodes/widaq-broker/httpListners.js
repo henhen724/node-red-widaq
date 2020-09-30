@@ -1,11 +1,15 @@
-const pty = require("node-pty");
-const socketIO = require("socket.io");
-const cookie = require("cookies");
-const Iron = require("@hapi/iron");
+const getInfo = require("../../lib/getInfo");
 
-const TOKEN_NAME = 'wi_daq_token';
-
-const httpListners = (app) => {
+const httpListners = (node, app) => {
+    // API routes
+    app.get("/widaq/info", (req, res) => {
+        res.json(getInfo(node));
+    });
+    app.post("/widaq/error", (req, res) => {
+        node.error(`${req.ip} sent the following error: ${req.body}`);
+        res.status(202);
+    });
+    // HTML pages
     app.get("/widaq/ssh", (req, res) => {
         res.sendFile("./pages/terminal.html", { root: __dirname });
     });

@@ -2,15 +2,13 @@ const httpListners = require("../nodes/widaq-broker/httpListners");
 const http = require("http");
 const request = require("supertest");
 const express = require("express");
-const fs = require("fs");
-const { getExtIPs } = require("../lib/getExtIPs");
 const app = express();
 const server = http.Server(app);
 
 describe("HTTP and WS tests", () => {
     beforeAll(done => {
         server.listen(1880, () => {
-            httpListners(app, server, { log: console.log });
+            httpListners({ error: console.error }, app);
             done();
         })
     });

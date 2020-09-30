@@ -5,7 +5,7 @@ const Iron = require("@hapi/iron");
 
 const TOKEN_NAME = 'wi_daq_token';
 
-const socketListners = (server, node) => {
+const socketListners = (node, server) => {
     // Setup socket.io WebSocket server for SSH connection
     node.ioServer = socketIO.listen(server);
     // node.ioServer.use(async (socket, next) => {

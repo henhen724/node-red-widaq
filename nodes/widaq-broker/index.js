@@ -2,27 +2,35 @@ const mqttListners = require("./mqttListners");
 const httpListners = require("./httpListners");
 const socketListners = require("./socketListner");
 const formatSchema = require("../../lib/formatSchema");
-const getState = require("../../lib/getState");
+const getInfo = require("../../lib/getInfo");
 module.exports = function (RED) {
     function WiDAQBroker(config) {
         // Get all cofig varibles into the state of the node
         RED.nodes.createNode(this, config);
         this.host = config.host;
         this.port = config.port;
-        this.topicsObj = {};
+        this.topicsObj = { __widaq_req_info__: { qos: 0 }, __public_key__: { qos: 0 } };
+        this.public_key = null;
         this.schema = { in: {}, out: {} };
         mqttListners(this);
-        httpListners(RED.httpNode);
-        socketListners(RED.server, this);
+        httpListners(this, RED.httpNode);
+        socketListners(this, RED.server);
         const node = this
         new Promise(res => setTimeout(res, 0)).then(() => {
             // After all other nodes have declared
             formatSchema(node.error, node.schema);
-            node.client.publish("__widaq_state__", JSON.stringify(getState(this)));
+            node.client.publish("__widaq_info__", JSON.stringify(getInfo(this, RED.server)));
             node.client.on("message", (topic, message) => {
-                if (topic === "__widaq_req_state__")
-                    node.client.publish("__widaq_state__", JSON.stringify(getState(this)));
+                switch (topic) {
+                    case "__widaq_req_info__":
+                        node.client.publish("__widaq_info__", JSON.stringify(getInfo(this, RED.server)));
+                    case "__public_key__":
+                        this.public_key = message.toString();
+                }
             })
+        });
+        node.on('close', () => {
+            node.client.publish("__widaq_disconnect__", JSON.stringify(getInfo(this, RED.server)));
         })
     }
     RED.nodes.registerType("widaq-broker", WiDAQBroker, {
