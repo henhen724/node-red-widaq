@@ -10,9 +10,10 @@ const httpListners = (node, app) => {
         res.status(202);
     });
     // HTML pages
-    app.get("/widaq/ssh", (req, res) => {
-        res.sendFile("./pages/terminal.html", { root: __dirname });
-    });
+    // Removed teporarly for testing security
+    // app.get("/widaq/ssh", (req, res) => {
+    //     res.sendFile("./pages/terminal.html", { root: __dirname });
+    // });
     app.get("/widaq*", (req, res) => {
         res.status(404).sendFile("./pages/404.html", { root: __dirname });
     });

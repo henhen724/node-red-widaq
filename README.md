@@ -23,7 +23,7 @@ The Rasberry Pi end of the Wi-DAQ control system which make the Pi visible to yo
 The usage of widaq nodes is essentially identical to mqtt nodes.  There are in, out, and broker nodes which allow to connect to a MQTT broker connected to a Wi DAQ server.  In addition to the default functions of these nodes, you can add a schema, which allows the Wi DAQ website to show users what type of input/output you would like and how you would like it to be formated.
 ### HTTP Routes
 If you go to the /widaq/ssh route of the device the broker node will server you a psuedo terminal in the browser. 
-__Warning:__ The psuedo terminal is complete unsecure as of this version and will allow any webuser the ability excute non-admin command line commands.
+<!-- __Warning:__ The psuedo terminal is complete unsecure as of this version and will allow any webuser the ability excute non-admin command line commands. -->
 <!-- ## Manually Installing GraphQL Highlighting and Linting <a name="manual"></a>
 - Navigate to your node-red install.  If you installed it locally in folder, navigate to that. If you installed globally the path will be the following
     ### Mac OS/Linux
