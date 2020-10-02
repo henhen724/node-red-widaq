@@ -1,7 +1,7 @@
 # Wi DAQ Node-Red nodes (Alpha)
 The Rasberry Pi end of the Wi-DAQ control system which make the Pi visible to your Wi-DAQ server and able to send and recieve data and remote control.
 ## Installation
-- Navigate to your node-red user folder in your terminal of choice.  By default the user folder is $HOME/.node-red. You can set it to something else by passing the --userDir argument when running node-red from the command line, [*according to this docs page*](https://nodered.org/docs/user-guide/runtime/configuration).
+- Navigate to your node-red user folder in your terminal of choice.  By default, the user folder is $HOME/.node-red. You can set it to something else by passing the --userDir argument when running node-red from the command line, [*according to this docs page*](https://nodered.org/docs/user-guide/runtime/configuration).
 - Once you're there run
 
     ```
@@ -11,7 +11,7 @@ The Rasberry Pi end of the Wi-DAQ control system which make the Pi visible to yo
     ```
     yarn add node-red-widaq
     ```
-    if you perfer yarn.
+    if you prefer yarn.
 <!-- - (Optional step) The widaq type system uses [the GraphQL Type language](https://graphql.org/learn/schema/#type-language) to help validate MQTT input and output as well as making it easier to use the website by providing topic and property descriptions.  By default node-red's text editor does not include highlighting or syntax linting for GraphQL. Unfortunately, node-red make adding this quite difficult and provides no way for npm package to install new highlighting. Skiping this step does not stop you from writting in the text editor, but if you would like highlighting and linting while editing run the command bellow from the userDir.
     ```
     node node_modules/node-red-widaq/config/install-mode-graphqlschema.js
