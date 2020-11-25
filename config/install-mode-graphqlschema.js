@@ -6,7 +6,7 @@ const https = require("https");
 const fs = require("fs");
 
 try {
-    execSync("where npm").toString();
+    execSync("npm --version").toString();
 } catch (error) {
     throw new Error("Error: npm is not on the system path. Please add your instalation to the PATH or install npm.");
 }
