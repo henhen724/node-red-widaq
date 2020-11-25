@@ -1,6 +1,6 @@
 const mqttListners = require("./mqttListners");
 const httpListners = require("./httpListners");
-const socketListners = require("./socketListner");
+// const socketListners = require("./socketListner");
 const formatSchema = require("../../lib/formatSchema");
 const getInfo = require("../../lib/getInfo");
 module.exports = function (RED) {
@@ -14,7 +14,7 @@ module.exports = function (RED) {
         this.schema = { in: {}, out: {} };
         mqttListners(this);
         httpListners(this, RED.httpNode);
-        socketListners(this, RED.server);
+        // socketListners(this, RED.server);
         const node = this
         new Promise(res => setTimeout(res, 0)).then(() => {
             // After all other nodes have declared

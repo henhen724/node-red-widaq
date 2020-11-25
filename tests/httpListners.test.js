@@ -24,10 +24,10 @@ describe("HTTP and WS tests", () => {
         expect(response.statusCode).toBe(404);
         return;
     });
-    test("test ssh serving", async () => {
-        expect.assertions(1);
-        const response = await request(app).get("/widaq/ssh");
-        expect(response.statusCode).toBe(200);
-        return;
-    })
+    // test("test ssh serving", async () => {
+    //     expect.assertions(1);
+    //     const response = await request(app).get("/widaq/ssh");
+    //     expect(response.statusCode).toBe(200);
+    //     return;
+    // })
 })

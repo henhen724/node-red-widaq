@@ -1,7 +1,6 @@
 const pty = require("node-pty");
 const socketIO = require("socket.io");
 const cookie = require("cookies");
-const Iron = require("@hapi/iron");
 
 const TOKEN_NAME = 'wi_daq_token';
 
@@ -13,6 +12,7 @@ const socketListners = (node, server) => {
     //     const cookies = cookie.parse(cookiesStr);
     //     if (!cookies[TOKEN_NAME]) next(new Error("not signed into widaq"));
     //     const session = await Iron.unseal(cookies[TOKEN_NAME], node.TOKEN_SECRET, Iron.defaults);
+    //     ^^^^^^ This needs to be updated to use JWT
     //     const expiresAt = session.createdAt + session.maxAge * 1000
 
     //     if (Date.now() < expiresAt) {
